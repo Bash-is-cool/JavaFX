@@ -1,4 +1,3 @@
-
 import java.util.*;
 
 public class Hand
@@ -31,7 +30,7 @@ public class Hand
         }
         
         for(Card c : hand) {
-            if(sum > 21 && aceCount > 0) {
+            if(sum > 21 && aceCount > 0 && c.getRank().equalsIgnoreCase("Ace")) {
                 c.setValue(1);
                 sum -= 10;
             }
@@ -109,6 +108,9 @@ public class Hand
         return result;
     }
     
+    /**
+     * Draws a card from the shoe
+     */
     public void drawCard() {
         addCard(shoe.drawCard());
     }
