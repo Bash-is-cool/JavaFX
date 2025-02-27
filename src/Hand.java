@@ -14,6 +14,13 @@ public class Hand
     }
     
     /**
+     * Alternate Constructor for Hand
+     */
+    public Hand() {
+        hand = new ArrayList<Card>();
+    }
+    
+    /**
      * Adds all the cards together and checks for aces. aces will only change
      * if the sum is greater than 21
      * 
