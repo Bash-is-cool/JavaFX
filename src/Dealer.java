@@ -1,5 +1,11 @@
 import java.util.*;
 
+/**
+ * Dealer runs the game of blackjack. 
+ * 
+ * @author Alex Silverman
+ * @version 1.0.0
+ */
 public class Dealer
 {
     private Shoe s;
@@ -7,21 +13,36 @@ public class Dealer
     private Hand hand;
     private int numPlayers;
     private int bet;
-   
+    
+    /**
+     * Constructor for Dealer.
+     * 
+     *@param Shoe shoe
+     */
     public Dealer(Shoe shoe) {
         s = shoe;
         players = new ArrayList<Player>();
         hand = new Hand();
     }
     
+    /**
+     * gives a card from the shoe to the player
+     * of Dealers hand
+     */
     public void giveCard(Player p) {
         p.getHand().addCard(s.drawCard());
     }
     
+    /**
+     * adds a card to the dealers hand
+     */
     public void hit() {
         hand.addCard(s.drawCard());
     }
     
+    /**
+     * Deals the cards in the proper order (players, then dealer)
+     */
     public void deal() {
         for(int j = 0; j < 2; j++) {
             for(int i = 0; i < players.size(); i++) {
@@ -31,14 +52,28 @@ public class Dealer
         }
     }
     
+    /**
+     * toString for the dealer. Only shows the second card that was
+     * dealt to him
+     * 
+     * @return String
+     */
     public String toString() {
         return hand.getHand().get(1).toString() + "\n";
     }
     
+    /**
+     * Adds a player to the game
+     */
     public void addPlayer(Player p) {
         players.add(p);
     }
     
+    /**
+     * Starts the game by asking the amount of players, name of players
+     * how much money each player has, gets their initial bets and starts
+     * the round
+     */
     public void start() {
         Scanner s = new Scanner(System.in);
         System.out.println("Welcome to Blackjack! How many players Are Playing?");
@@ -95,6 +130,11 @@ public class Dealer
         playerBet();
     }
     
+    /**
+     * Plays a round of blackjack. Players can hit, stay, or double
+     * (if they can double). Starts dealer round after all players 
+     * have gone
+     */
     public void round() {
         for(int i = 0; i < players.size(); i++) {
             int cardsGiven = 0;
@@ -116,6 +156,11 @@ public class Dealer
                     System.out.println("You busted with " + players.get(i).getHand().getSum());
                     sleep(3000);
                     break y;
+                } else if(hand.getHand().get(1).getRank().equalsIgnoreCase("Ace")) {
+                    if(hand.isBlackjack()) {
+                        System.out.println("Dealer Has Blackjack.");
+                        payout();
+                    }
                 }
                 
                 if(cardsGiven > 0 || players.get(i).getBet() * 2 >= players.get(i).getBank()) {
@@ -135,7 +180,7 @@ public class Dealer
                     if(cardsGiven == 0 && players.get(i).getBank() >= bet * 2) {
                         players.get(i).doubleMoney();
                         giveCard(players.get(i));
-                        System.out.println("Your bet: " + players.get(i).getBet());
+                        System.out.println("Your bet: $" + players.get(i).getBet());
                         System.out.println("Your final hand:\n" + players.get(i).toString());
                         System.out.println("Total: " + players.get(i).getHand().getSum());
                         sleep(3000);
@@ -154,9 +199,12 @@ public class Dealer
         dealerRound();
     }
     
+    /**
+     * Takes a turn for the dealer. Hits until 17
+     */
     public void dealerRound() {
         do {
-            if(hand.getSum() < 18) {
+            if(hand.getSum() < 17) {
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
                 System.out.println("Dealer's Hand:");
@@ -165,7 +213,7 @@ public class Dealer
                 sleep(2000);
                 hit();
             }
-        } while(hand.getSum() < 18);
+        } while(hand.getSum() < 17);
         System.out.print("\033[H\033[2J");
         System.out.flush();
         System.out.println("Dealer's Hand:");
@@ -175,6 +223,14 @@ public class Dealer
         payout();
     }
     
+    /**
+     * Pays the players based on how the round went.
+     * If player has Blackjack - 3:2
+     * If Player beats Dealer - 2:1
+     * If player busts - 0
+     * If Dealer beats player - 0
+     * 
+     */
     public void payout() {
         for(Player p : players) {
             int playerSum = p.getHand().getSum();
@@ -205,6 +261,11 @@ public class Dealer
         playAgain();
     }
     
+    /**
+     * Sleeps for a given amount of time
+     *
+     * @param int m
+     */
     public void sleep(int m) {
         try {
             Thread.sleep(m);
@@ -213,6 +274,9 @@ public class Dealer
         }
     }
     
+    /**
+     * Allows the players to bet. Checks to see if they have enough money
+     */
     public void playerBet() {
         Scanner s = new Scanner(System.in);
         for(int i = 0; i < players.size(); i++) {
@@ -242,14 +306,25 @@ public class Dealer
         round();
     }
     
+    /**
+     * Gives the players an option to play again given they have enough money
+     */
     public void playAgain() {
         Scanner s = new Scanner(System.in);
         String response = "";
         for(int i = 0; i < players.size(); i++) {
             System.out.print("\033[H\033[2J");
             System.out.flush();
-            System.out.println(players.get(i).getName() + " play again?\n\t(Y)es\t\t(N)o");
             w: while(true) {
+                if(players.get(i).getBank() == 0) {
+                    System.out.println("You are out of money. The Casino has asked you to leave.");
+                    sleep(2000);
+                    players.remove(i);
+                    i--;
+                    break w;
+                }
+                System.out.println(players.get(i).getName() + " play again?\n\t(Y)es\t\t(N)o");
+                
                 if(s.hasNextLine()) {
                     response = s.nextLine();
                     if(response.equalsIgnoreCase("Y") || response.equalsIgnoreCase("Yes")) {
@@ -268,10 +343,17 @@ public class Dealer
                 }
             }
         }
-        resetHand();
-        playerBet();
+        if(players.size() != 0) {
+            resetHand();
+            playerBet();
+        } else {
+            System.exit(0);
+        }
     }
     
+    /**
+     * clears everybodys hand including the dealer
+     */
     public void resetHand() {
         for(int i = 0; i < players.size(); i++) {
             players.get(i).getHand().clear();
