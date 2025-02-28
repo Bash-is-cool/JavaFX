@@ -107,7 +107,7 @@ public class Dealer
                     bankroll = s.nextInt();
                     s.nextLine();
                     if(bankroll % 2 == 0 && bankroll >= 10) {
-                       break;
+                       break z;
                     } else {
                         System.out.println("Invalid Amount. Enter an integer greater than 10 and that the number % 2 == 0 and less than 2147483640");
                         System.out.print("$");
@@ -245,7 +245,7 @@ public class Dealer
                 System.out.println(p.getName() + " busted and lost the bet of $" + bet);
                 sleep(3000);
             } else if(hand.isBust() || playerSum > dealerSum) {
-                int winnings = bet + bet;
+                int winnings = bet * 2;
                 p.addMoney(winnings);
                 System.out.println(p.getName() + " wins! Payout: $" + winnings);
                 sleep(3000);
@@ -288,17 +288,24 @@ public class Dealer
                 if(s.hasNextInt()) {
                     bet = s.nextInt();
                     s.nextLine();
-                    if(bet < 10 || bet % 2 != 0 || bet % 5 != 0 || bet > players.get(i).getBank()) {
+                    if(bet >= 10 && (bet % 2 == 0 || bet % 5 == 0) && bet <= players.get(i).getBank()) {
+                        players.get(i).placeBet(bet);
+                        break w;
+                    } else {
                         System.out.print("\033[H\033[2J");
+                        System.out.flush();
                         System.out.println("Please try Again.\n");
                         System.out.println(players.get(i).getName() + ", place a bet.");
                         System.out.print("$");
-                    } else {
-                        players.get(i).placeBet(bet);
-                        break w;
                     }
                 } else {
+                    System.out.print("\033[H\033[2J");
+                    System.out.flush();
                     System.out.println("Invalid Input. Please try again");
+                    System.out.println("Your Money: " + players.get(i).getBank());
+                    System.out.println(players.get(i).getName() + ", place a bet.");
+                    System.out.print("$");
+                    s.nextLine();
                 }
             }
         }
@@ -311,8 +318,8 @@ public class Dealer
      */
     public void playAgain() {
         Scanner s = new Scanner(System.in);
-        String response = "";
         for(int i = 0; i < players.size(); i++) {
+            String response = "";
             System.out.print("\033[H\033[2J");
             System.out.flush();
             w: while(true) {
