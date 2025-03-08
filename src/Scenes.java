@@ -1,9 +1,7 @@
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -12,8 +10,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.*;
-
-import javax.swing.*;
 
 public class Scenes extends Application {
 
@@ -64,12 +60,12 @@ public class Scenes extends Application {
         circle.setRadius(50);
         circle.setFill(Color.ORANGE);
 
-        Image image = new Image("Fuecoco.png");
+        Image image = new Image("Images/Fuecoco.png");
         ImageView imageView = new ImageView(image);
         imageView.setX(400);
         imageView.setY(400);
 
-        Image icon = new Image("Fuecoco.png");
+        Image icon = new Image("Images/Fuecoco.png");
 
         root.getChildren().add(text);
         root.getChildren().add(line);

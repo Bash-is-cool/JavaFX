@@ -1,7 +1,6 @@
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
-import javafx.scene.paint.Color;
 import javafx.stage.*;
 
 public class CSS extends Application {
@@ -9,7 +8,7 @@ public class CSS extends Application {
     //Needs this method
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("CSS.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXML/CSS.fxml"));
         Scene scene = new Scene(root);
         //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
         String css = this.getClass().getResource("application.css").toExternalForm();

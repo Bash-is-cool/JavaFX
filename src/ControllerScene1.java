@@ -20,7 +20,7 @@ public class ControllerScene1 {
     public void login(ActionEvent event) throws IOException {
         String username = nameTextField.getText();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ControllerScene2.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/ControllerScene2.fxml"));
         root = loader.load();
 
         ControllerScene2 controllerScene2 = loader.getController();

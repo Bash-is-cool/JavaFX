@@ -1,6 +1,4 @@
-import com.sun.nio.sctp.SendFailedNotification;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
@@ -15,7 +13,7 @@ public class Stages extends Application {
         //Stage stage = new Stage();
         Group root = new Group();
         Scene scene = new Scene(root, Color.BLACK);
-        Image icon = new Image("BASH.png");
+        Image icon = new Image("Images/BASH.png");
         stage.getIcons().add(icon);
         stage.setWidth(420);
         stage.setHeight(420);

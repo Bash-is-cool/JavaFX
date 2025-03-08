@@ -1,7 +1,6 @@
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
-import javafx.scene.paint.Color;
 import javafx.stage.*;
 
 public class FXML extends Application {
@@ -9,7 +8,7 @@ public class FXML extends Application {
     //Needs this method
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXML/FXML.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
 

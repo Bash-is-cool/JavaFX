@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 public class ControllerCommunication extends Application {
     @Override
     public void start(Stage stage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("ControllerScene1.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXML/ControllerScene1.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
