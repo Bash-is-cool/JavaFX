@@ -15,8 +15,8 @@ public class Card
     /**
      * Constructs the Card class with the rank and the suit 
      * 
-     * @param String s
-     * @param String r
+     * @param s
+     * @param r
      */
      
     public Card(String s, String r) {
@@ -95,9 +95,8 @@ public class Card
     /**
      * Sets the value of an ace based on the given value n. n has to be 11 
      * or 1
-     * 
-     * 
-     * @param int n
+     *
+     * @param n
      */
     public void setValue(int n) {
         if(rank.equalsIgnoreCase("Ace") && (n == 1 || n == 1)) {

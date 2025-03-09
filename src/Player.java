@@ -15,8 +15,8 @@ public class Player
     /**
      * Constructor for player. They need money and a name
      *
-     * @param String n
-     * @param int m
+     * @param n
+     * @param m
      */
     public Player(String n, int m) {
         name = n;
@@ -55,7 +55,7 @@ public class Player
     /**
      * Places a bet for the player
      * 
-     * @param int b
+     * @param b
      */
     public void placeBet(int b) {
         bet = b;
@@ -91,7 +91,7 @@ public class Player
     /**
      * Adds money to the player if they win
      * 
-     * @param int m
+     * @param m
      */
     public void addMoney(int m) {
         money += m;

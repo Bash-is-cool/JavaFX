@@ -17,7 +17,7 @@ public class Dealer
     /**
      * Constructor for Dealer.
      * 
-     *@param Shoe shoe
+     *@param shoe
      */
     public Dealer(Shoe shoe) {
         s = shoe;
@@ -266,7 +266,7 @@ public class Dealer
     /**
      * Sleeps for a given amount of time
      *
-     * @param int m
+     * @param m
      */
     public void sleep(int m) {
         try {
