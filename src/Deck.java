@@ -1,149 +1,124 @@
 import java.util.*;
 
-/**
- * Creates a standard 52 card deck of Cards. (Does not include Jokers)
- * 
- * @author Alex Silverman
- * @version 1.0.0
- */
-
-public class Deck
+public class Hand
 {
-    private ArrayList<Card> cards;
-   
-   
+    ArrayList<Card> hand;
+    Shoe shoe;
+    
     /**
-    * Deck() creates a Standard deck of 52 cards. Ace is one but holds the value
-    * of 11
-    */
-    public Deck() {
-        cards = new ArrayList<Card>();
-        for(int i = 0; i < 4; i++) {
-            if(i == 0) {
-                for(int j = 1; j < 14; j++) {
-                    if(j == 1)
-                        cards.add(new Card("♠", "Ace"));
-                    else if(j == 11)
-                        cards.add(new Card("♠", "Jack"));
-                    else if(j == 12)
-                        cards.add(new Card("♠", "Queen"));
-                    else if(j == 13)
-                        cards.add(new Card("♠", "King"));
-                    else 
-                        cards.add(new Card("♠", String.valueOf(j)));
-                }
-            } else if(i == 1) {
-                for(int j = 1; j < 14; j++) {
-                    if(j == 1)
-                        cards.add(new Card("♦", "Ace"));
-                    else if(j == 11)
-                        cards.add(new Card("♦", "Jack"));
-                    else if(j == 12)
-                        cards.add(new Card("♦", "Queen"));
-                    else if(j == 13)
-                        cards.add(new Card("♦", "King"));
-                    else 
-                        cards.add(new Card("♦", String.valueOf(j)));
-                }
-            } else if(i == 2) {
-                for(int j = 13; j > 0; j--) {
-                    if(j == 1)
-                        cards.add(new Card("♣", "Ace"));
-                    else if(j == 11)
-                        cards.add(new Card("♣", "Jack"));
-                    else if(j == 12)
-                        cards.add(new Card("♣", "Queen"));
-                    else if(j == 13)
-                        cards.add(new Card("♣", "King"));
-                    else 
-                        cards.add(new Card("♣", String.valueOf(j)));
-                }
-            } else if(i == 3) {
-                for(int j = 13; j > 0; j--) {
-                    if(j == 1)
-                        cards.add(new Card("♥", "Ace"));
-                    else if(j == 11)
-                        cards.add(new Card("♥", "Jack"));
-                    else if(j == 12)
-                        cards.add(new Card("♥", "Queen"));
-                    else if(j == 13)
-                        cards.add(new Card("♥", "King"));
-                    else 
-                        cards.add(new Card("♥", String.valueOf(j)));
-                }
+     * Constructs a Hand which initalizes an ArrayList<Card>
+     */
+    public Hand(Shoe s) {
+        hand = new ArrayList<Card>();
+        shoe = s;
+    }
+    
+    /**
+     * Alternate Constructor for Hand
+     */
+    public Hand() {
+        hand = new ArrayList<Card>();
+    }
+    
+    /**
+     * Adds all the cards together and checks for aces. aces will only change
+     * if the sum is greater than 21
+     * 
+     * @return int sum
+     */
+    public int getSum() {
+        int sum = 0;
+        int aceCount = 0;
+        for(Card c : hand) {
+            sum += c.getValue();
+            if(c.getRank().equalsIgnoreCase("Ace")) {
+                aceCount++;
             }
         }
-    }
-   
-    /**
-     * Perfectly shuffles deck, cuts the deck and repeats this process.
-     * makes it so that the deck will almost never be the same
-     */
-    public void shuffle() {
-        faro();
-        cut();
-        faro();
-        cut();
-        faro();
-    }
-   
-    /**
-    * prints out the cards array
-    * 
-    * @return String result
-    */
-    public String toString() {
-        String result = "[";
-        for(int i = 0; i < cards.size(); i++) {
-            result += cards.get(i).toString2() + ", ";
+        
+        for(Card c : hand) {
+            if(sum > 21 && aceCount > 0 && c.getRank().equalsIgnoreCase("Ace")) {
+                c.setValue(1);
+                sum -= 10;
+            }
         }
-        return result + "]";
+        return sum;
     }
     
     /**
-     * Perfectly shuffles the deck
-     */
-    public void faro() {
-        List<Card> firstHalf = new ArrayList<Card>(cards.subList(0, cards.size() / 2));
-        List<Card> secondHalf = new ArrayList<Card>(cards.subList(cards.size() / 2, cards.size()));
-        cards.clear();
-        for(int i = 0; i < firstHalf.size(); i++) {
-            cards.add(firstHalf.get(i));
-            cards.add(secondHalf.get(i));
-        }
-    }
-    
-    /**
-     * Cuts the deck at a random spot in the deck
-     */
-    public void cut() {
-        int rand = (int)(Math.random() * 53);
-        List<Card> front = new ArrayList<Card>(cards.subList(rand, cards.size()));
-        List<Card> back = new ArrayList<>(cards.subList(0, rand));
-        cards.clear();
-        cards.addAll(front);
-        cards.addAll(back);
-    }
-    
-    /**
-     * Draws a card from the top of the deck and removes that card
+     * Returns the number of cards in the hand.
      * 
-     * @return Card c
+     * @return int hand.size()
      */
-    public Card drawCard() {
-        return cards.remove(0);
+    public int getNumCards() {
+        return hand.size();
     }
     
     /**
-     * Gets are the cards back into the deck
+     * Checks the requirements for a blackjack (2 cards and sum is 21)
+     * 
+     * @return boolean isBlackjack
      */
-    public void reset() {
-        cards.clear();
-        Deck tempDeck = new Deck();
-        cards = tempDeck.getDeck();
+    public boolean isBlackjack() {
+        if(getNumCards() == 2 && getSum() == 21)
+            return true;
+        else
+            return false;
     }
     
-    public ArrayList<Card> getDeck() {
-        return cards;
+    /**
+     * Clears all cards from the hand so new cards can be dealt
+     */
+    public void clear() {
+        hand.clear();
+    }
+    
+    /**
+     * Returns the ArrayList hand for use in other classes
+     * 
+     * @return ArrayList<Card> hand
+     */
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
+    
+    /**
+     * Adds a card to the hand
+     */
+    public void addCard(Card c) {
+        hand.add(c);
+    }
+    
+    /**
+     * Checks to see if the hand busts (hand > 21)
+     * 
+     * @return boolean isBust
+     */
+    public boolean isBust() {
+        if(getSum() > 21) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * The toString for the hand.
+     * 
+     * @return String result
+     */
+    public String toString() {
+        String result = "";
+        for(Card c : hand) {
+            result += c.toString2() + "\n";
+        }
+        return result;
+    }
+    
+    /**
+     * Draws a card from the shoe
+     */
+    public void drawCard() {
+        addCard(shoe.drawCard());
     }
 }
