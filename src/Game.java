@@ -5,6 +5,6 @@ import java.util.*;
     public static void main(String[] args)
     {
         // Start here!
-        new Dealer(new Shoe(6));
+        new Dealer(new Shoe(6)).start();
     }
 }
