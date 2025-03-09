@@ -76,6 +76,8 @@ public class Dealer
      */
     public void start() {
         Scanner s = new Scanner(System.in);
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
         System.out.println("Welcome to Blackjack! How many players Are Playing?");
         int numPlayers = 0;
         while(true) {
@@ -149,7 +151,6 @@ public class Dealer
                 System.out.println("Total: " + players.get(i).getHand().getSum());
                 if(players.get(i).getHand().isBlackjack() == true) {
                     System.out.println("You have Blackjack!");
-                    payout();
                     sleep(3000);
                     break y;
                 } else if(players.get(i).getHand().isBust() == true) {
@@ -163,7 +164,7 @@ public class Dealer
                     }
                 }
                 
-                if(cardsGiven > 0 || players.get(i).getBet() * 2 >= players.get(i).getBank()) {
+                if(cardsGiven > 0 && players.get(i).getBet() + players.get(i).getBet() > players.get(i).getBank()) {
                     System.out.println("\t(H)it\t(S)tay");
                 } else {
                     System.out.println("\t(H)it\t(S)tay\t(D)ouble");
@@ -214,6 +215,7 @@ public class Dealer
                 hit();
             }
         } while(hand.getSum() < 17);
+        
         System.out.print("\033[H\033[2J");
         System.out.flush();
         System.out.println("Dealer's Hand:");
@@ -338,12 +340,14 @@ public class Dealer
                         System.out.println("Nice!");
                         sleep(2000);
                         break w;
-                    } else {
+                    } else if(response.equalsIgnoreCase("N") || response.equalsIgnoreCase("no")) {
                         System.out.println("Thanks For Playing!");
                         sleep(2000);
                         players.remove(i);
                         i--;
                         break w;
+                    } else {
+                        System.out.println("Invalid Input. Please try again");
                     }
                 } else {
                     System.out.println("Invalid Input. Please try again");
