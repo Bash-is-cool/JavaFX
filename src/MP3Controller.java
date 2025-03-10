@@ -8,9 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebHistory;
-import javafx.scene.web.WebView;
+
 
 import javafx.event.ActionEvent;
 import javafx.util.Duration;
@@ -70,12 +68,7 @@ public class MP3Controller implements Initializable {
             speed.getItems().add(Integer.toString(speeds[i]) + "%");
         }
         speed.setOnAction(this::changeSpeed);
-        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
-            }
-        });
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> mediaPlayer.setVolume(volumeSlider.getValue() * 0.01));
         songProgressBar.setStyle("-fx-accent: green");
     }
 
