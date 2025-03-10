@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Black Jack.iml" filepath="$PROJECT_DIR$/Black Jack.iml" />
       <module fileurl="file://$PROJECT_DIR$/Javafx.iml" filepath="$PROJECT_DIR$/Javafx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javafx.iml" filepath="$PROJECT_DIR$/javafx.iml" />
     </modules>
   </component>
 </project>
